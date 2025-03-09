@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode-Scanner Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .result-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-height: 50px;
+            width: 100%;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Barcode-Scanner Test</h1>
+        <p>Klicke auf den Button, um den Barcode-Scanner zu öffnen.</p>
+        
+        <button id="openScannerBtn">Scanner öffnen</button>
+        
+        <div class="result-container">
+            <h3>Gescannter Barcode:</h3>
+            <p id="barcodeResult">Noch kein Barcode gescannt</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const openScannerBtn = document.getElementById('openScannerBtn');
+            const barcodeResult = document.getElementById('barcodeResult');
+            
+            // Event-Listener für den Button zum Öffnen des Scanners
+            openScannerBtn.addEventListener('click', function() {
+                // Pfad zum Scanner - relativ zur aktuellen Seite
+                const scannerUrl = '/index.html';
+                
+                // Öffne den Scanner in einem Popup-Fenster
+                const popup = window.open(scannerUrl, 'scanner', 'width=600,height=600');
+                
+                // Event-Listener für die Nachricht vom Scanner
+                window.addEventListener('message', function(event) {
+                    // Zeige den gescannten Barcode an
+                    barcodeResult.textContent = event.data;
+                    console.log('Barcode empfangen:', event.data);
+                }, false);
+            });
+        });
+    </script>
+</body>
+</html>
